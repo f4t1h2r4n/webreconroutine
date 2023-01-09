@@ -1,0 +1,25 @@
+#!/bin/bash
+echo "in order to run this script you install some tools"
+url=$1
+
+echo "subdomain enumeration and brute force"
+touch subdomains1.txt subdomains.txt
+/opt/dnscan/dnscan.py -d %%.$1 -n -N | tee -a subdomains1.txt
+assetfinder $1 | tee -a subdomains1.txt
+amass enum -d $1 -passive | tee -a subdomains1.txt 
+
+cat subdomains1.txt |sort -u | grep ".$1"| sed '/ /d' > subdomains.txt
+rm subdomains1.txt
+#touch alivesubs.txt
+#cat subdomains.txt | httprobe -c 50 -c 50000 | tee -a alivesubs.txt
+
+cat subdomains.txt | waybackurls > waybackinfo.txt
+
+
+cat waybackinfo.txt | grep "?*=" | cut -d "=" -f 1 | sort -u > waybackparams.txt
+
+
+#awk '/.js/ {print}' waybackinfo.txt > scrape.txt
+#awk '/.php/ {print}' waybackinfo.txt >> scrape.txt
+#awk '/.aspx/ {print}' waybackinfo.txt >> scrape.txt
+#whatweb $1 > fingerprint.txt
