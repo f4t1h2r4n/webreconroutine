@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "in order to run this script you install some tools"
+echo "in order to run this script you need to install some tools"
 url=$1
 
 echo "subdomain enumeration and brute force"
@@ -10,16 +10,19 @@ amass enum -d $1 -passive | tee -a subdomains1.txt
 
 cat subdomains1.txt |sort -u | grep ".$1"| sed '/ /d' > subdomains.txt
 rm subdomains1.txt
-#touch alivesubs.txt
-#cat subdomains.txt | httprobe -c 50 -c 50000 | tee -a alivesubs.txt
-
-cat subdomains.txt | waybackurls > waybackinfo.txt
 
 
-cat waybackinfo.txt | grep "?*=" | cut -d "=" -f 1 | sort -u > waybackparams.txt
+echo "alive subdomains"
+touch alivesubs.txt
+cat subdomains.txt | httprobe > alivesubs.txt
 
 
-#awk '/.js/ {print}' waybackinfo.txt > scrape.txt
-#awk '/.php/ {print}' waybackinfo.txt >> scrape.txt
-#awk '/.aspx/ {print}' waybackinfo.txt >> scrape.txt
-#whatweb $1 > fingerprint.txt
+echo "pull out the ips and delete https/http"
+cat alivesubs.txt | sed 's|http://||g' | sed 's|https://||g' | sort -u > newalivesubs.txt
+dig -f newalivesubs.txt +short | sort -u | sed '/[a-z]/d' > ips.txt
+rm newalivesubs.txt
+
+echo "scan for ports"
+touch scannedsubs.txt
+nmap -iL ips.txt -T4 -F -oA scannedsubs.txt
+rm ips.txt
