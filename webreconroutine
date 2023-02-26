@@ -26,3 +26,18 @@ echo "scan for ports"
 touch scannedsubs.txt
 nmap -iL ips.txt -T4 -F -oA scannedsubs.txt
 rm ips.txt
+
+echo "past information"
+touch waybackinfo.txt
+cat subdomains | waybackurls| sort -u > waybackinfo.txt
+
+echo "parameter pulling"
+touch wayback_paramas.txt
+cat waybackinfo.txt| grep "?*="| cut -d "=" -f 1 | sort -u > wayback_params.txt
+
+echo "js/jsp/json/php/aspx/html information"
+touch scrape_data.txt
+awk '/.js/ {print}' waybackinfo.txt > scrape_data.txt
+awk '/.php/ {print}' waybackinfo.txt >> scrape_data.txt
+awk '/.aspx/ {print}' waybackinfo.txt >> scrape_data.txt
+awk '/.html/ {print}' waybackinfo.txt >> scrape_data.txt
