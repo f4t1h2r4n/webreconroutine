@@ -41,3 +41,10 @@ awk '/.js/ {print}' waybackinfo.txt > scrape_data.txt
 awk '/.php/ {print}' waybackinfo.txt >> scrape_data.txt
 awk '/.aspx/ {print}' waybackinfo.txt >> scrape_data.txt
 awk '/.html/ {print}' waybackinfo.txt >> scrape_data.txt
+
+
+echo "subdomain enumeration on alives subdomains"
+
+for URL in $(<alivesubs.txt); do
+   ffuf -w /usr/share/wordlists/seclists/SecLists-master/Discovery/Web-Content/directory-list-2.3-small.txt -u "$URL"/FUZZ -mc 200 >>dirbust.txt
+done
