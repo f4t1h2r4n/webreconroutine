@@ -2,6 +2,11 @@
 echo "in order to run this script you need to install some tools"
 url=$1
 
+
+echo "cloud enumeration"
+touch clouds.txt
+cloud_enum -k $1 >clouds.txt
+
 echo "subdomain enumeration and brute force"
 touch subdomains1.txt subdomains.txt
 /opt/dnscan/dnscan.py -d %%.$1 -n -N | tee -a subdomains1.txt
@@ -41,7 +46,6 @@ awk '/.js/ {print}' waybackinfo.txt > scrape_data.txt
 awk '/.php/ {print}' waybackinfo.txt >> scrape_data.txt
 awk '/.aspx/ {print}' waybackinfo.txt >> scrape_data.txt
 awk '/.html/ {print}' waybackinfo.txt >> scrape_data.txt
-
 
 echo "subdomain enumeration on alives subdomains"
 
