@@ -1,6 +1,6 @@
 # webrecounroutine
 
-A basic bash script for web reconanissance before web pentesting, takes *.target.com, i mean to add to more, not be used for malicious purposes.
+A basic bash script for web reconanissance before web pentesting, takes *.target.com, i mean to add to more, not to be used for malicious purposes.
 
 # dependencies
 * cloud-enum cloud enumeration - https://github.com/initstring/cloud_enum
