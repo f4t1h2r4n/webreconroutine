@@ -10,8 +10,8 @@ It never sends traffic to the target itself: no brute forcing, no port scanning,
 ```bash
 chmod +x webreconroutine-passive.sh
 
-./webreconroutine-passive.sh target.com        # fully passive
-./webreconroutine-passive.sh -r target.com     # also resolve subdomains via your DNS resolver
+./webreconroutine.sh target.com        # fully passive
+./webreconroutine.sh -r target.com     # also resolve subdomains via your DNS resolver
 ```
 
 `*.target.com` is accepted too; the leading `*.` is stripped automatically.
