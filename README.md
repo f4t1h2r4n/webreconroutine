@@ -1,4 +1,4 @@
-# webreconroutine-passive
+# webreconroutine
 
 A minimalist **passive** recon script for wildcard scopes (`*.target.com`), written for bug bounty work.
 It uses only tools that ship with Linux Mint (and most Debian/Ubuntu systems): `bash`, `curl`, `grep`, `sed`, `awk`, `sort`, `xargs`, `getent`. Nothing to install.
